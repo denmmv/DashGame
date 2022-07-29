@@ -22,6 +22,7 @@ public class Hero : NetworkBehaviour
     private Coroutine DashAction;
     private Coroutine DashCooldown;
     private float _dashCooldown;
+    private bool _isDashCooldown = false;
     private float _dashDistance;
 
     private float _turnSmoothTime;
@@ -119,8 +120,9 @@ public class Hero : NetworkBehaviour
     }
     public void Dash()
     {
-        if (!_isDashing)
+        if (!_isDashCooldown)
         {
+            _isDashCooldown = true;
             Vector3 targetPosition = this.transform.position + this.transform.forward*_dashDistance;
             DashAction = StartCoroutine(dashAction(targetPosition));
             DashCooldown = StartCoroutine(dashCooldown());
@@ -150,11 +152,12 @@ public class Hero : NetworkBehaviour
             }           
             yield return new WaitForFixedUpdate();
         }
+        _isDashing = false;
     }
     IEnumerator dashCooldown()
     {
         yield return new WaitForSeconds(_dashCooldown);
-        _isDashing = false;
+        _isDashCooldown = false;
     }
     #endregion
     #region Movement

@@ -20,5 +20,5 @@ MonoBehaviour:
   _dashDistance: 10
   _dashDuration: 0.5
   _injureDuration: 3
-  _pointsToWin: 1
+  _pointsToWin: 3
   _restartCooldown: 5
